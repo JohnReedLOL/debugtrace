@@ -3,6 +3,7 @@ Trace assert library for Scala.
 
 Sample usage:
 
+```scala
 import info.collaboration_station.debug._
 
 object Main {
@@ -11,8 +12,9 @@ object Main {
     "Hello World".traceStdOut
   }
 }
-
+```
+---
 Output:
 
-"Hello World" in thread run-main-0:
-        at info.collaboration_station.Main$.main(Main.scala:8)
+> "Hello World" in thread run-main-0:
+>        at info.collaboration_station.Main$.main(Main.scala:8)
