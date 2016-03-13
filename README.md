@@ -17,4 +17,5 @@ object Main {
 Output:
 
 > "Hello World" in thread run-main-0:
+
 >        at info.collaboration_station.Main$.main(Main.scala:8)
