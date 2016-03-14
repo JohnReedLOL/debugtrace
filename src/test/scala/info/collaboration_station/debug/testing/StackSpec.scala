@@ -146,12 +146,16 @@ class StackSpec extends FlatSpec {
   }
   "output" should "look good" in {
     Debug.enableEverything_!()
-    "Hello World 1".trace
+    "Hello World 1".trace // 1 line of stack trace
     // "Hello World 2".traceStdOut
-    Debug.trace("Hello World 3")
-    "foo".assertNonFatalEquals("bar", "message", maxLines = 2)
-    "foo".assertEquals("foo", "message2")
-    // "foo".assertEquals("bar", "message3") // exits with code 7
+    "Hello World 3".trace(3) // 3 lines of stack trace
+    Debug.trace("Hello World 4")
+    Debug.trace("Hello World 5", 2) // 2 lines of stack trace
+    "foo".assertNonFatalEquals("bar", "assertFailure1", maxLines = 2)
+    "foo".assertEquals("foo", "assertFailure2")
+    2.assert( _ + 1 == 3, "2 + 1 = 3")
+    Debug.fatalAssertOff_!() // disables fatal assert
+    "foo".assertEquals("bar", "message3") // assert cancelled
     assert(true)
   }
 /*
