@@ -8,5 +8,7 @@ object Main {
     "Hello World".trace
     "Hello World".traceStdOut
     "foo".assertNonFatalEquals("bar", "message")
+    "foo".assertEquals("foo", "message2")
+    "foo".assertEquals("bar", "message3") // exits with code 7
   }
 }

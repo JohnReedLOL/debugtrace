@@ -85,11 +85,11 @@ object Debug {
     * @param assertion the assertion that must be true for the program to run. Can be a value or a function.
     * @param message the message to be printed to standard error on assertion failure
     */
-  final def assert(assertion: => Boolean, message: String) = {
+  final def assert(assertion: => Boolean, message: String): Unit = {
     if(!assertion && Debug.fatalAssertOn_?) {
       ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      System.exit(7)
     }
-    System.exit(7)
   }
 
   /**
@@ -99,17 +99,17 @@ object Debug {
     * @param assertion the assertion that must be true for the program to run. Can be a value or a function.
     * @param message the message to be printed to standard out on assertion failure
     */
-  final def assertStdOut(assertion: => Boolean, message: String) = {
+  final def assertStdOut(assertion: => Boolean, message: String): Unit = {
     if(!assertion && Debug.fatalAssertOn_?) {
       ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      System.exit(7)
     }
-    System.exit(7)
   }
 
   /**
     * Like Debug.assert, but does not terminate the application.
     */
-  final def assertNonFatal(assertion: => Boolean, message: String) = {
+  final def assertNonFatal(assertion: => Boolean, message: String): Unit = {
     if(!assertion && Debug.nonFatalAssertOn_?) {
       ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
@@ -118,7 +118,7 @@ object Debug {
   /**
     * Like Debug.assertStdOut, but does not terminate the application.
     */
-  final def assertNonFatalStdOut(assertion: => Boolean, message: String) = {
+  final def assertNonFatalStdOut(assertion: => Boolean, message: String): Unit = {
     if(!assertion && Debug.nonFatalAssertOn_?) {
       ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
