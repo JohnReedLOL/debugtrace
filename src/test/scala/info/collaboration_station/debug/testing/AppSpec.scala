@@ -1,12 +1,10 @@
-package example
+package info.collaboration_station.debug.testing
 
 import java.io._
-
 import info.collaboration_station.debug._
-import org.scalatest.{Matchers, PropSpec}
 import org.scalatest.prop._
-
-import scala.util.control.Breaks._
+import org.scalatest.{Matchers, PropSpec}
+// import info.collaboration_station.debug.testing.TestingUtils // this import comes from debugtrace/test/scala
 
 class CheckSpec
   extends PropSpec
@@ -23,28 +21,6 @@ class CheckSpec
   }
   */
 
-  def getAssertMessage(bfReader1: BufferedReader): Array[String] = {
-    var assertMessage: Array[String] = Array[String]()
-    try {
-      breakable {
-        while (true) {
-          val nextLine = bfReader1.readLine()
-          // nextLine.trace2
-          //System.err.println("bf " + bfReader1.toString + " reading: " + nextLine)
-          if (nextLine == null) {
-            break // break out of loop if the end of the stream has been reached
-          }
-          else {
-            assertMessage = assertMessage :+ nextLine // append the next line to the end
-          }
-        }
-      }
-    } catch {
-      case ioe: IOException => // Don't worry about it.
-    }
-    assertMessage
-  }
-
   property ("Asserts and Exceptions produce same stack traces") {
     val assertMessage = {
       val originalOut: PrintStream = System.out;
@@ -59,7 +35,7 @@ class CheckSpec
       // So you can print again
       val bais1: ByteArrayInputStream = new ByteArrayInputStream(baos1.toByteArray())
       val bfReader1 = new BufferedReader(new InputStreamReader(bais1))
-      getAssertMessage(bfReader1)
+      TestingUtils.getMessage(bfReader1)
     }
     val exception = new RuntimeException();
     val exceptionMessage: Array[String] = {
@@ -72,7 +48,7 @@ class CheckSpec
       System.setErr(originalErr);
       val bais2: ByteArrayInputStream = new ByteArrayInputStream(baos2.toByteArray())
       val bfReader2 = new BufferedReader(new InputStreamReader(bais2))
-      getAssertMessage(bfReader2)
+      TestingUtils.getMessage(bfReader2)
     }
     val minLength = Math.min(assertMessage.length, exceptionMessage.length)
 
