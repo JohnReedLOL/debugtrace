@@ -32,7 +32,7 @@ class StackSpec extends FlatSpec {
       // (bfReaderErr == null).trace // must be false
       val message = TestingUtils.getMessage(bfReaderErr)
       // (message == null).trace // must be false
-      val didTraceMessage_? : Boolean = (message.length != 0)
+      val didTraceMessage_? : Boolean = (message.length > 0)
       assert(didTraceMessage_?)
     }
   }
@@ -76,12 +76,12 @@ class StackSpec extends FlatSpec {
       // (bfReaderOut == null).trace // must be false
       val message = TestingUtils.getMessage(bfReaderOut)
       // (message == null).trace // must be false
-      val didTraceMessage_? : Boolean = (message.length != 0)
+      val didTraceMessage_? : Boolean = (message.length > 0)
       assert(didTraceMessage_?)
     }
   }
 
-  "Disabling trace to std out" should "disable tracingto std out" in {
+  "Disabling trace to std out" should "disable tracing to std out" in {
     Debug.traceOutOff_!
     val traceMessage = {
       val originalOut: PrintStream = System.out;
@@ -99,6 +99,49 @@ class StackSpec extends FlatSpec {
       val message = TestingUtils.getMessage(bfReaderOut)
       // (message == null).trace // must be false
       assert(message.length == 0) // no message was obtained
+    }
+  }
+
+  it should "not disable assert to standard out" in {
+    Debug.nonFatalAssertOn_!() // enable assertion to standard out
+    Debug.traceOutOff_!() // disable trace to standard out
+    val traceMessage = {
+      val originalOut: PrintStream = System.out;
+      // To get it back later
+      val baosOut: ByteArrayOutputStream = new ByteArrayOutputStream();
+      // replaces standard error with new PrintStream
+      val newOut: PrintStream = new PrintStream(baosOut)
+      System.setOut(newOut)
+      "foo".assertNonFatalStdOut( _ equals "bar", "Error message"); // write stuff to System.out
+      System.out.flush()
+      System.setOut(originalOut); // So you can print again
+      val baisOut: ByteArrayInputStream = new ByteArrayInputStream(baosOut.toByteArray())
+      val bfReaderOut = new BufferedReader(new InputStreamReader(baisOut))
+      // (bfReaderOut == null).trace // must be false
+      val message = TestingUtils.getMessage(bfReaderOut)
+      // (message == null).trace // must be false
+      val didTraceMessage_? : Boolean = (message.length > 0)
+      assert(didTraceMessage_?)
+    }
+  }
+  "Disabling non-fatal assert" should "stop non-fatal assert from working" in {
+    Debug.nonFatalAssertOff_!() // disable assertion to standard out
+    val traceMessage = {
+      val originalOut: PrintStream = System.out;
+      // To get it back later
+      val baosOut: ByteArrayOutputStream = new ByteArrayOutputStream();
+      // replaces standard error with new PrintStream
+      val newOut: PrintStream = new PrintStream(baosOut)
+      System.setOut(newOut)
+      "foo".assertNonFatalStdOut( _ equals "bar", "Error message"); // write stuff to System.out
+      System.out.flush()
+      System.setOut(originalOut); // So you can print again
+      val baisOut: ByteArrayInputStream = new ByteArrayInputStream(baosOut.toByteArray())
+      val bfReaderOut = new BufferedReader(new InputStreamReader(baisOut))
+      // (bfReaderOut == null).trace // must be false
+      val message = TestingUtils.getMessage(bfReaderOut)
+      // (message == null).trace // must be false
+      assert(message.length == 0)
     }
   }
 /*
