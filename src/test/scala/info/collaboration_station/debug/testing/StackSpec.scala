@@ -144,6 +144,16 @@ class StackSpec extends FlatSpec {
       assert(message.length == 0)
     }
   }
+  "output" should "look good" in {
+    Debug.enableEverything_!()
+    "Hello World 1".trace
+    // "Hello World 2".traceStdOut
+    Debug.trace("Hello World 3")
+    "foo".assertNonFatalEquals("bar", "message", maxLines = 2)
+    "foo".assertEquals("foo", "message2")
+    // "foo".assertEquals("bar", "message3") // exits with code 7
+    assert(true)
+  }
 /*
   "An empty Set" should "should have size 0" in {
     assert(Set.empty.size == 0)
