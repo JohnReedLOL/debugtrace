@@ -79,6 +79,32 @@ object Debug {
   }
 
   /**
+    * Prints the trace message with a one line stack trace.
+    * @param message the message to print before the one line stack trace.
+    */
+  final def trace(message: String): Unit = ImplicitTraceObject.traceInternal(message, 1)
+
+  /**
+    * Prints the trace message with N lines of stack trace.
+    * @param message the message to print before the stack trace.
+    * @param linesOfStackTrace the number of lines of stack trace to print.
+    */
+  final def trace(message: String, linesOfStackTrace: Int): Unit = ImplicitTraceObject.traceInternal(message, linesOfStackTrace)
+
+  /**
+    * Prints the trace message with all the lines of stack trace.
+    * @param message the message to print before the stack trace.
+    */
+  final def traceStack(message: String): Unit = ImplicitTraceObject.traceInternal(message, Int.MaxValue)
+
+  final def traceStdOut(message: String): Unit = ImplicitTraceObject.traceInternal(message, 1, useStdOut_? = true)
+
+  final def traceStdOut(message: String, linesOfStackTrace: Int): Unit = ImplicitTraceObject.traceInternal(message, linesOfStackTrace, useStdOut_? = true)
+
+  final def traceStackStdOut(message: String): Unit = ImplicitTraceObject.traceInternal(message, Int.MaxValue, useStdOut_? = true)
+
+
+  /**
     * A fatal assertion. Debug.assert( 1 + 2 = 3 )
     * Terminates the program with exit code "7"
     *
