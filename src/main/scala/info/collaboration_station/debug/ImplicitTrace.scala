@@ -156,7 +156,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     */
   final def assert(assertion: (MyType) => Boolean, message: String) = {
     if(! assertion(me) && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
     System.exit(7)
   }
@@ -169,46 +169,46 @@ final class ImplicitTrace[MyType](val me: MyType) {
     */
   final def assertStdOut(assertion: (MyType) => Boolean, message: String) = {
     if(! assertion(me) && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
     System.exit(7)
   }
   final def assertEquals(other: MyType, message: String) = {
     val assertionTrue_? = this == other
     if(! assertionTrue_? && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
     System.exit(7)
   }
   final def assertEqualsStdOut(other: MyType, message: String) = {
     val assertionTrue_? = this == other
     if(! assertionTrue_? && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
     System.exit(7)
   }
   final def assertNonFatal(assertion: (MyType) => Boolean, message: String) = {
     val assertionTrue_? = assertion(me)
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
   }
   final def assertNonFatalStdOut(assertion: (MyType) => Boolean, message: String) = {
     val assertionTrue_? = assertion(me)
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
   }
   final def assertNonFatalEquals(other: MyType, message: String) = {
     val assertionTrue_? = this == other
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
   }
   final def assertNonFatalEqualsStdOut(other: MyType, message: String) = {
     val assertionTrue_? = this == other
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(me, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
   }
 }
@@ -223,8 +223,7 @@ object ImplicitTraceObject {
     */
   val newStackOffset = Debug.stackOffset + 1
   /**
-    * Prints out the object with N lines of stack trace
-    *
+    * Prints out the object with N lines of stack trace. Do not use with assertions.
     * @param toPrintOutNullable the object to print out. May be "null".
     * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values.
     * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default.
@@ -237,6 +236,44 @@ object ImplicitTraceObject {
     if( !Debug.traceOutOn_? && useStdOut_?) {
       return toPrintOutNullable // if tracing to standard out is off and we trace to out, return
     }
+    val numStackLines = if(numStackLinesIntended > 0) {
+      numStackLinesIntended // the number of lines must be positive or zero
+    } else {
+      0
+    }
+    val stack = Thread.currentThread().getStackTrace
+    val toPrintOut: String = if(toPrintOutNullable == null) {"null"} else {toPrintOutNullable.toString}
+    var toPrint = "\"" + toPrintOut + "\"" + " in thread " + Thread.currentThread().getName + ":"
+    for (row <- 0 to Math.min(numStackLines - 1, stack.length - 1 - newStackOffset)) {
+      val lineNumber = newStackOffset + row
+      val stackLine = stack(lineNumber)
+      // The java stack traces use a tab character, not a space
+      val tab = "\t"
+      toPrint += "\n" + tab + "at " + stackLine
+    }
+    toPrint += "\n"
+    if(useStdOut_?) {
+      System.out.println(toPrint)
+    } else {
+      System.err.println(toPrint)
+    }
+    toPrintOutNullable // return the origional thing, even if it is null.
+  }
+  /**
+    * Prints out the object with N lines of stack trace. Meant to be used only for asserts.
+    * @param toPrintOutNullable the object to print out. May be "null".
+    * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values.
+    * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default.
+    * @return The thing that was put into the first parameter
+    */
+  protected[debug] final def traceInternalAssert[A](toPrintOutNullable: A, numStackLinesIntended: Int, useStdOut_? : Boolean = false): A = {
+    // Disabling trace does not also disable assert. They are two separate things.
+    //if( !Debug.traceErrOn_? && !useStdOut_?) {
+    //  return toPrintOutNullable // if tracing to standard error is off and we trace to standard error, return
+    //}
+    //if( !Debug.traceOutOn_? && useStdOut_?) {
+    //  return toPrintOutNullable // if tracing to standard out is off and we trace to out, return
+    //}
     val numStackLines = if(numStackLinesIntended > 0) {
       numStackLinesIntended // the number of lines must be positive or zero
     } else {

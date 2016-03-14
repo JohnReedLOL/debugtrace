@@ -14,8 +14,7 @@ object Debug {
 
   /**
     * Tells you whether tracing to standard out is on or off.
-    * If this is false, assertions that print to standard out will not print anything, but the application will still terminate with error code 7 for fatal assertions.
-    * Non-fatal assertions that print to standard out will do nothing.
+    * Note that disabling the "traceStdOut" feature does not disable the "assertStdOut" feature.
     */
   def traceOutOn_? = _traceOut_?
 
@@ -23,8 +22,7 @@ object Debug {
 
   /**
     * Tells you whether tracing to standard error is on or off.
-    * If this is false, assertions that print to standard error will not print anything, but the application will still terminate with error code 7 for fatal assertions.
-    * Non-fatal assertions that print to standard error will do nothing.
+    * Note that disabling the "trace" feature does not disable the "assert" feature.
     */
   def traceErrOn_? = _traceErr_?
 
@@ -89,7 +87,7 @@ object Debug {
     */
   final def assert(assertion: => Boolean, message: String) = {
     if(!assertion && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
     System.exit(7)
   }
@@ -103,7 +101,7 @@ object Debug {
     */
   final def assertStdOut(assertion: => Boolean, message: String) = {
     if(!assertion && Debug.fatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
     System.exit(7)
   }
@@ -113,7 +111,7 @@ object Debug {
     */
   final def assertNonFatal(assertion: => Boolean, message: String) = {
     if(!assertion && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
+      ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue) // trace the max number of lines of stack trace to std error
     }
   }
 
@@ -122,7 +120,7 @@ object Debug {
     */
   final def assertNonFatalStdOut(assertion: => Boolean, message: String) = {
     if(!assertion && Debug.nonFatalAssertOn_?) {
-      ImplicitTraceObject.traceInternal(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
+      ImplicitTraceObject.traceInternalAssert(message, Int.MaxValue, useStdOut_? = true) // trace the max number of lines of stack trace to std out
     }
   }
 }
