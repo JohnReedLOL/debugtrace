@@ -58,6 +58,11 @@ final class ImplicitTrace[MyType](val me: MyType) {
     */
   final def trace(linesOfStackTrace: Int): MyType = ImplicitTraceObject.traceInternal(me, linesOfStackTrace)
   /**
+    * Prints out this object to standard error along with the entire stack trace.
+    * @return The thing that was just printed.
+    */
+  final def traceStack: MyType = ImplicitTraceObject.traceInternal(me, Int.MaxValue)
+  /**
     * Prints out this object with 1 lines of stack trace to standard out.
     * @return The thing that was just printed.
     */
@@ -68,6 +73,11 @@ final class ImplicitTrace[MyType](val me: MyType) {
     * @return The thing that was just printed.
     */
   final def traceStdOut(linesOfStackTrace: Int): MyType = ImplicitTraceObject.traceInternal(me, linesOfStackTrace, useStdOut_? = true)
+  /**
+    * Prints out this object to standard out along with the entire stack trace.
+    * @return The thing that was just printed.
+    */
+  final def traceStackStdOut: MyType = ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true)
   /**
     * A fatal assertion, but with the function name after the object. 1.assert( _ + 2 = 3 )
     * Terminates the program with exit code "7"
