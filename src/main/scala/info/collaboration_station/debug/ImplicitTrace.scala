@@ -49,49 +49,49 @@ final class ImplicitTrace[MyType](val me: MyType) {
   }
   /**
     * Prints out this object with 0 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace0: MyType = ImplicitTraceObject.traceInternal(me, 0)
   /**
     * Prints out this object with 1 lines of stack trace to standard error. Same as trace1
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace: MyType = ImplicitTraceObject.traceInternal(me, 1)
   /**
     * Prints out this object with 1 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace1: MyType = ImplicitTraceObject.traceInternal(me, 1)
   /**
     * Prints out this object with 2 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace2: MyType = ImplicitTraceObject.traceInternal(me, 2)
   /**
     * Prints out this object with 3 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace3: MyType = ImplicitTraceObject.traceInternal(me, 3)
   /**
     * Prints out this object with 4 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace4: MyType = ImplicitTraceObject.traceInternal(me, 4)
   /**
     * Prints out this object with 5 lines of stack trace to standard error.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace5: MyType = ImplicitTraceObject.traceInternal(me, 5)
   /**
     * Prints out this object with N lines of stack trace to standard error.
- *
+    *
     * @param linesOfStackTrace The number of lines of stack trace.
     * @return The thing that was just printed.
     */
@@ -99,49 +99,49 @@ final class ImplicitTrace[MyType](val me: MyType) {
 
   /**
     * Prints out this object with 0 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace0StdOut: MyType = ImplicitTraceObject.traceInternal(me, 0, useStdOut_? = true)
   /**
     * Prints out this object with 1 lines of stack trace to standard out. Same as trace1StdOut.
- *
+    *
     * @return The thing that was just printed.
     */
   final def traceStdOut: MyType = ImplicitTraceObject.traceInternal(me, 1, useStdOut_? = true)
   /**
     * Prints out this object with 1 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace1StdOut: MyType = ImplicitTraceObject.traceInternal(me, 1, useStdOut_? = true)
   /**
     * Prints out this object with 2 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace2StdOut: MyType = ImplicitTraceObject.traceInternal(me, 2, useStdOut_? = true)
   /**
     * Prints out this object with 3 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace3StdOut: MyType = ImplicitTraceObject.traceInternal(me, 3, useStdOut_? = true)
   /**
     * Prints out this object with 4 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace4StdOut: MyType = ImplicitTraceObject.traceInternal(me, 4, useStdOut_? = true)
   /**
     * Prints out this object with 5 lines of stack trace to standard out.
- *
+    *
     * @return The thing that was just printed.
     */
   final def trace5StdOut: MyType = ImplicitTraceObject.traceInternal(me, 5, useStdOut_? = true)
   /**
     * Prints out this object with N lines of stack trace to standard out.
- *
+    *
     * @param linesOfStackTrace The number of lines of stack trace.
     * @return The thing that was just printed.
     */
