@@ -218,7 +218,7 @@ object ImplicitTraceObject {
       val tab = "\t"
       toPrint += "\n" + tab + "at " + stackLine
     }
-    toPrint += "\n"
+    toPrint += "\n" + "^ The above stack trace leads to an assertion failure. ^" + "\n"
     if(useStdOut_?) {
       System.out.println(toPrint)
     } else {

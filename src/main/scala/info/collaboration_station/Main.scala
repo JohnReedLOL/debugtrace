@@ -7,5 +7,6 @@ object Main {
   def main(args: Array[String]) {
     "Hello World".trace
     "Hello World".traceStdOut
+    "foo".assertNonFatalEquals("bar", "message")
   }
 }
