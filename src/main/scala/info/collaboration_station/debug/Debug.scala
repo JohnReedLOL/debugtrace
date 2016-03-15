@@ -160,7 +160,7 @@ object Debug {
   }
 
   /**
-    * Like [[Debug.assert()]], but does not terminate the application
+    * Like Debug.assert(), but does not terminate the application
     */
   final def assertNonFatal(assertion: => Boolean, message: String, maxLines: Int = Int.MaxValue): Unit = {
     if(!assertion && Debug.nonFatalAssertOn_?) {
@@ -169,7 +169,7 @@ object Debug {
   }
 
   /**
-    * Like [[Debug.assertStdOut()]], but does not terminate the application
+    * Like Debug.assertStdOut(), but does not terminate the application
     */
   final def assertNonFatalStdOut(assertion: => Boolean, message: String, maxLines: Int = Int.MaxValue): Unit = {
     if(!assertion && Debug.nonFatalAssertOn_?) {

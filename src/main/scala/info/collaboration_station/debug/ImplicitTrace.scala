@@ -119,7 +119,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     me
   }
   /**
-    * Same as [[ImplicitTrace.assertEquals()]], but it uses StdOut instead of StdErr
+    * Same as ImplicitTrace.assertEquals(), but it uses StdOut instead of StdErr
     */
   final def assertEqualsStdOut(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
@@ -130,7 +130,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     me
   }
   /**
-    * Same as [[ImplicitTrace.assert()]], but it does not kill anything (not even the current thread)
+    * Same as ImplicitTrace.assert(), but it does not kill anything (not even the current thread)
     */
   final def assertNonFatal(assertion: (MyType) => Boolean, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = assertion(me)
@@ -140,7 +140,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     me
   }
   /**
-    * Same as [[ImplicitTrace.assertStdOut()]], but it does not kill anything (not even the current thread)
+    * Same as ImplicitTrace.assertStdOut(), but it does not kill anything (not even the current thread)
     */
   final def assertNonFatalStdOut(assertion: (MyType) => Boolean, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = assertion(me)
@@ -150,7 +150,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     me
   }
   /**
-    * Same as [[ImplicitTrace.assertEquals()]], but it does not kill anything (not even the current thread)
+    * Same as ImplicitTrace.assertEquals(), but it does not kill anything (not even the current thread)
     */
   final def assertNonFatalEquals(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
@@ -160,7 +160,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     me
   }
   /**
-    * Same as [[ImplicitTrace.assertEqualsStdOut()]], but it does not kill anything (not even the current thread)
+    * Same as ImplicitTrace.assertEqualsStdOut(), but it does not kill anything (not even the current thread)
     */
   final def assertNonFatalEqualsStdOut(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
