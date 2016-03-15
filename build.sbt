@@ -2,7 +2,7 @@ name := "debugtrace"
 
 version := "0.0.0"
 
-organization := "example"
+organization := "debugtrace"
 
 // version := "0.1.0-SNAPSHOT"
 
