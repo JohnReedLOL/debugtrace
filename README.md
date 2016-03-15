@@ -69,9 +69,11 @@ Instructions (for IntelliJ IDE):
 
 - Pick either "Application" (with a Main class) or "SBT Task" (run or test, usually)
 
-- Click the green 'Run' triangle and watch the stack traces in the console.
+- Click the green 'Run' (Shift+F10) or 'Debug' (Shift+F9) button and watch the stack traces in the console. 
 
-These instruction assume you know how to package a jar file (sbt package) and include it in your project (SBT uses the "lib" directory)
+- For best results, click 'Debug' as the stack traces will be optimized away in 'Run' mode. IntelliJ console has shortcut up and down arrows to navigate up and down the stack trace (see: http://s29.postimg.org/ud0knou1j/debug_Screenshot_Crop.png ).
+
+These instruction assume you know how to package a jar file (sbt package) and include it in your project (SBT uses the "lib" directory).
 
 To include the jar file, you can add this to your build.sbt file:
 
