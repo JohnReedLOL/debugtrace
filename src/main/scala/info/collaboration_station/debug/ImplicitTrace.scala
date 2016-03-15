@@ -1,13 +1,12 @@
 package info.collaboration_station.debug
 
-/**
-  * Wrapper class for a value that can be traced
+/** Wrapper class for a value that can be traced
   * @param me the original value inside the wrapper
   * @tparam MyType the original type of the value inside the wrapper
   */
 final class ImplicitTrace[MyType](val me: MyType) {
   /**
-    * Same as System.out.print(this), but with the function name after the object.
+    * Same as System.out.print(this), but with the function name after the object
     */
   final def print() = {
     if(me != null) {
@@ -17,7 +16,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
   }
   /**
-    * Same as System.out.println(this), but with the function name after the object.
+    * Same as System.out.println(this), but with the function name after the object
     */
   final def println() = {
     if(me != null) {
@@ -27,7 +26,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
   }
   /**
-    * Same as System.err.print(this), but with the function name after the object.
+    * Same as System.err.print(this), but with the function name after the object
     */
   final def printStdErr() = {
     if(me != null) {
@@ -37,7 +36,7 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
   }
   /**
-    * Same as System.err.println(this), but with the function name after the object.
+    * Same as System.err.println(this), but with the function name after the object
     */
   final def printlnStdErr() = {
     if(me != null) {
@@ -46,40 +45,39 @@ final class ImplicitTrace[MyType](val me: MyType) {
       System.err.println("null")
     }
   }
-  /**
-    * Prints out this object with 1 lines of stack trace to standard error.
-    * @return The thing that was just printed.
+  /** Prints out this object with 1 lines of stack trace to standard error
+    * @return The thing that was just printed
     */
   final def trace: MyType = ImplicitTraceObject.traceInternal(me, 1)
-  /**
-    * Prints out this object to standard error with a user specified number of lines of stack trace.
-    * @param linesOfStackTrace The number of lines of stack trace.
-    * @return The thing that was just printed.
+
+  /** Prints out this object to standard error with a user specified number of lines of stack trace
+    * @param linesOfStackTrace The number of lines of stack trace
+    * @return The thing that was just printed
     */
   final def trace(linesOfStackTrace: Int = 1): MyType = ImplicitTraceObject.traceInternal(me, linesOfStackTrace)
-  /**
-    * Prints out this object to standard error along with the entire stack trace.
-    * @return The thing that was just printed.
+
+  /** Prints out this object to standard error along with the entire stack trace
+    * @return The thing that was just printed
     */
   final def traceStack: MyType = ImplicitTraceObject.traceInternal(me, Int.MaxValue)
-  /**
-    * Prints out this object with 1 lines of stack trace to standard out.
-    * @return The thing that was just printed.
+
+  /** Prints out this object with 1 lines of stack trace to standard out
+    * @return The thing that was just printed
     */
   final def traceStdOut: MyType = ImplicitTraceObject.traceInternal(me, 1, useStdOut_? = true)
-  /**
-    * Prints out this object to standard out with a user specified number of lines of stack trace.
-    * @param linesOfStackTrace The number of lines of stack trace.
-    * @return The thing that was just printed.
+
+  /** Prints out this object to standard out with a user specified number of lines of stack trace
+    * @param linesOfStackTrace The number of lines of stack trace
+    * @return The thing that was just printed
     */
   final def traceStdOut(linesOfStackTrace: Int): MyType = ImplicitTraceObject.traceInternal(me, linesOfStackTrace, useStdOut_? = true)
-  /**
-    * Prints out this object to standard out along with the entire stack trace.
-    * @return The thing that was just printed.
+
+  /** Prints out this object to standard out along with the entire stack trace
+    * @return The thing that was just printed
     */
   final def traceStackStdOut: MyType = ImplicitTraceObject.traceInternal(me, Int.MaxValue, useStdOut_? = true)
-  /**
-    * A fatal assertion, but with the function name after the object. 1.assert( _ + 2 = 3 )
+
+  /** A fatal assertion, but with the function name after the object. 1.assert( _ + 2 = 3 )
     * Terminates the program with exit code "7"
     * @param assertion the assertion that must be true for the program to run
     * @param message the message to be printed to standard error on assertion failure
@@ -91,8 +89,8 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
-  /**
-    * A fatal assertion, but with the function name after the object. 1.assert( _ + 2 = 3 )
+
+  /** A fatal assertion, but with the function name after the object. 1.assert( _ + 2 = 3 )
     * Terminates the program with exit code "7"
     * @param assertion the assertion that must be true for the program to run
     * @param message the message to be printed  to standard out on assertion failure
@@ -104,6 +102,14 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+
+  /** Compares this object with another object of the same type for equality using the ".equals()" method
+    * Terminates the program with exit code "7" in case of assertion failure
+    * @param other the thing that this must be equal to
+    * @param message the message to be printed  to standard error on assertion failure
+    * @param maxLines the max number of lines of stack trace to show on assertion failure. Defaults to all lines
+    * @example "foo".assertEquals("bar", "foo does not equal bar")
+    */
   final def assertEquals(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
     if(! assertionTrue_? && Debug.fatalAssertOn_?) {
@@ -112,6 +118,9 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+  /**
+    * Same as [[ImplicitTrace.assertEquals()]], but it uses StdOut instead of StdErr
+    */
   final def assertEqualsStdOut(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
     if(! assertionTrue_? && Debug.fatalAssertOn_?) {
@@ -120,6 +129,9 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+  /**
+    * Same as [[ImplicitTrace.assert()]], but it does not kill anything (not even the current thread)
+    */
   final def assertNonFatal(assertion: (MyType) => Boolean, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = assertion(me)
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
@@ -127,6 +139,9 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+  /**
+    * Same as [[ImplicitTrace.assertStdOut()]], but it does not kill anything (not even the current thread)
+    */
   final def assertNonFatalStdOut(assertion: (MyType) => Boolean, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = assertion(me)
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
@@ -134,6 +149,9 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+  /**
+    * Same as [[ImplicitTrace.assertEquals()]], but it does not kill anything (not even the current thread)
+    */
   final def assertNonFatalEquals(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
@@ -141,6 +159,9 @@ final class ImplicitTrace[MyType](val me: MyType) {
     }
     me
   }
+  /**
+    * Same as [[ImplicitTrace.assertEqualsStdOut()]], but it does not kill anything (not even the current thread)
+    */
   final def assertNonFatalEqualsStdOut(other: MyType, message: String, maxLines: Int = Int.MaxValue): MyType = {
     val assertionTrue_? = (me.equals(other))
     if(! assertionTrue_? && Debug.nonFatalAssertOn_?) {
@@ -154,16 +175,16 @@ final class ImplicitTrace[MyType](val me: MyType) {
   * Contains static methods for ImplicitTraceObject
   */
 object ImplicitTraceObject {
-  /**
-    * The offset of the first line from the base of the stack trace.
-    * The +1 is necessary because the method call traceInternal adds one to the offset of the stack trace.
+
+  /** The offset of the first line from the base of the stack trace
+    * The +1 is necessary because the method call traceInternal adds one to the offset of the stack trace
     */
   val newStackOffset = Debug.stackOffset + 1
-  /**
-    * Prints out the object with N lines of stack trace. Do not use with assertions.
-    * @param toPrintOutNullable the object to print out. May be "null".
-    * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values.
-    * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default.
+
+  /** Prints out the object with N lines of stack trace. Do not use with assertions
+    * @param toPrintOutNullable the object to print out. May be "null"
+    * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values
+    * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default
     * @return The thing that was put into the first parameter
     */
   protected[debug] final def traceInternal[A](toPrintOutNullable: A, numStackLinesIntended: Int, useStdOut_? : Boolean = false): A = {
@@ -194,17 +215,17 @@ object ImplicitTraceObject {
     } else {
       System.err.println(toPrint)
     }
-    toPrintOutNullable // return the origional thing, even if it is null.
+    toPrintOutNullable // return the origional thing, even if it is null
   }
-  /**
-    * Prints out the object with N lines of stack trace. Meant to be used only for asserts.
-    * @param toPrintOutNullable the object to print out. May be "null".
-    * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values.
-    * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default.
+
+  /** Prints out the object with N lines of stack trace. Meant to be used only for asserts
+    * @param toPrintOutNullable the object to print out. May be "null"
+    * @param numStackLinesIntended N, the number of lines of stack trace intended. Defaults to zero actual lines of stack trace for negative values
+    * @param useStdOut_? Whether to use standard out for trace (as opposed to std error). Uses standard error by default
     * @return The thing that was put into the first parameter
     */
   protected[debug] final def traceInternalAssert[A](toPrintOutNullable: A, numStackLinesIntended: Int, useStdOut_? : Boolean = false): A = {
-    // Disabling trace does not also disable assert. They are two separate things.
+    // Disabling trace does not also disable assert. They are two separate things
     //if( !Debug.traceErrOn_? && !useStdOut_?) {
     //  return toPrintOutNullable // if tracing to standard error is off and we trace to standard error, return
     //}
@@ -232,6 +253,6 @@ object ImplicitTraceObject {
     } else {
       System.err.println(toPrint)
     }
-    toPrintOutNullable // return the origional thing, even if it is null.
+    toPrintOutNullable // return the original thing, even if it is null
   }
 }
