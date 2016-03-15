@@ -71,11 +71,14 @@ Instructions (for IntelliJ IDE):
 
 - Click the green 'Run' (Shift+F10) or 'Debug' (Shift+F9) button and watch the stack traces in the console. 
 
-- For best results, click 'Debug' as the stack traces will be optimized away in 'Run' mode. IntelliJ console has shortcut up and down arrows to navigate up and down the stack trace (see: http://s29.postimg.org/ud0knou1j/debug_Screenshot_Crop.png ).
+- For best results, click 'Debug' as the stack traces will be optimized away in 'Run' mode. 
+ 
+ 
+IntelliJ console has shortcut up and down arrows to navigate up and down the stack trace (see: http://s29.postimg.org/ud0knou1j/debug_Screenshot_Crop.png ).
 
 These instruction assume you know how to package a jar file (sbt package) and include it in your project (SBT uses the "lib" directory).
 
-To include the jar file, you can add this to your build.sbt file:
+To include the jar file, you can add to your build.sbt file: 
 
 libraryDependencies += "debugtrace" % "debugtrace" % "2.11" from "https://github.com/JohnReedLOL/debugtrace/blob/master/debugtrace_2.11-0.1.0.jar"
 
@@ -96,9 +99,6 @@ Requirements:
 - SBT
 - Some sort of IDE that supports stack trace highlighing
 
-____________________________________________________________________________________________________________________
-
-Repository URL: Not available
 ____________________________________________________________________________________________________________________
 
 More info:
