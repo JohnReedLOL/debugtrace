@@ -63,19 +63,19 @@ ________________________________________________________________________________
 
 Instructions (for IntelliJ IDE):
 
-- 0. Add the jar file to your project. import info.collaboration_station.debug._
+- Add the jar file to your project. import info.collaboration_station.debug._
 
-- 1. Go to: Run > Edit Configurations > Add New Configuration (green plus sign)
+- Go to: Run > Edit Configurations > Add New Configuration (green plus sign)
 
-- 2. Pick either "Application" (with a Main class) or "SBT Task" (run or test, usually)
+- Pick either "Application" (with a Main class) or "SBT Task" (run or test, usually)
 
-- 3. Click the green 'Run' triangle and watch the stack traces in the console.
+- Click the green 'Run' triangle and watch the stack traces in the console.
 
 These instruction assume you know how to package a jar file (sbt package) and include it in your project (SBT uses the "lib" directory)
 
-You can also put the JAR file on Dropbox (or any other public folder) and include it into your SBT project like so: 
+To include the jar file, you can add this to your build.sbt file:
 
-In "build.sbt" : "libraryDependencies += "debugtrace" % "debugtrace" % "2.11" from "http://www.url.of.file.jar"
+libraryDependencies += "debugtrace" % "debugtrace" % "2.11" from "https://github.com/JohnReedLOL/debugtrace/blob/master/debugtrace_2.11-0.1.0.jar"
 
 ____________________________________________________________________________________________________________________
 
