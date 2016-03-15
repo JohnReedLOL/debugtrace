@@ -10,74 +10,74 @@ object Debug {
     */
   protected[debug] val stackOffset = 2
 
-  private var _traceOut_? = true
+  @volatile private var _traceOutOn_? = true
 
   /** Tells you whether tracing to standard out is on or off
     * Note that disabling the "traceStdOut" feature does not disable the "assertStdOut" feature
     */
-  def traceOutOn_? = _traceOut_?
+  def traceOutOn_? = _traceOutOn_?
 
-  private var _traceErr_? = true
+  @volatile private var _traceErrOn_? = true
 
   /** Tells you whether tracing to standard error is on or off
     * Note that disabling the "trace" feature does not disable the "assert" feature
     */
-  def traceErrOn_? = _traceErr_?
+  def traceErrOn_? = _traceErrOn_?
 
-  private var _fatalAssert_? = true
+  @volatile private var _fatalAssertOn_? = true
 
   /**
     * Tells you whether fatal asserts are on or off
     */
-  def fatalAssertOn_? = _fatalAssert_?
+  def fatalAssertOn_? = _fatalAssertOn_?
 
-  private var _nonFatalAssert_? = true
+  @volatile private var _nonFatalAssertOn_? = true
 
   /**
     * Tells you whether non-fatal asserts are on or off
     */
-  def nonFatalAssertOn_? = _nonFatalAssert_?
+  def nonFatalAssertOn_? = _nonFatalAssertOn_?
 
   // these lines disable and enable particular features
 
   /**
     * Enables tracing to standard error. Has no effect on "print" or "println", only on "trace" methods
     */
-  def traceErrOn_!() = { _traceErr_? = true }
+  def traceErrOn_!() = { _traceErrOn_? = true }
   /**
     * Disables tracing to standard error. Has no effect on "print" or "println", only on "trace" methods
     */
-  def traceErrOff_!() = { _traceErr_? = false }
+  def traceErrOff_!() = { _traceErrOn_? = false }
 
   /**
     * Enables tracing to standard out. Has no effect on "print" or "println", only on "traceStdOut" methods
     */
-  def traceOutOn_!() = { _traceOut_? = true }
+  def traceOutOn_!() = { _traceOutOn_? = true }
 
   /**
     * Disables tracing to standard out. Has no effect on "print" or "println", only on "traceStdOut" methods
     */
-  def traceOutOff_!() = { _traceOut_? = false }
+  def traceOutOff_!() = { _traceOutOn_? = false }
 
   /**
     * Enables fatal assertions. Has no effect on "assertNonFatal", only on "assert" and other fatal assert methods (assertEquals, etc.)
     */
-  def fatalAssertOn_!() = { _fatalAssert_? = true }
+  def fatalAssertOn_!() = { _fatalAssertOn_? = true }
 
   /**
     * Disables fatal assertions. Has no effect on "assertNonFatal", only on "assert" and other fatal assert methods (assertEquals, etc.)
     */
-  def fatalAssertOff_!() = { _fatalAssert_? = false }
+  def fatalAssertOff_!() = { _fatalAssertOn_? = false }
 
   /**
     * Enables non-fatal assertions. Has no effect on "assert" and other fatal assert methods (assertEquals, etc.)
     */
-  def nonFatalAssertOn_!() = { _nonFatalAssert_? = true }
+  def nonFatalAssertOn_!() = { _nonFatalAssertOn_? = true }
 
   /**
     * Disables non-fatal assertions. Has no effect on "assert" and other fatal assert methods (assertEquals, etc.)
     */
-  def nonFatalAssertOff_!() = { _nonFatalAssert_? = false }
+  def nonFatalAssertOff_!() = { _nonFatalAssertOn_? = false }
 
   /**
     * Enables tracing and asserts, including fatal assertions
