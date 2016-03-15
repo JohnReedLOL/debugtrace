@@ -49,7 +49,7 @@ Output:
 	^ The above stack trace leads to an assertion failure. ^
 ```
 
-See screenshot (coming soon)
+See screenshot: http://s30.postimg.org/czzaeecgh/Example_Screenshot.png
 
 ____________________________________________________________________________________________________________________
 
