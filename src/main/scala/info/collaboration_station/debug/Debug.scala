@@ -156,12 +156,13 @@ object Debug {
   final def traceStackStdOut(message: String): Unit = ImplicitTraceObject.traceInternal(message, Int.MaxValue, useStdOut_? = true)
 
 
-  /** A fatal assertion
+  /** A fatal assertion.
     * Terminates the program with exit code "7"
     *
     * @param assertion the assertion that must be true for the program to run. Can be a value or a function
     * @param message   the message to be printed to standard error on assertion failure
-    * @example Debug.assert( 1 + 2 == 4, "one plus two is not equal to four" )
+    * @example Debug.assert( 1 + 2 == 4, "Error: one plus two is not equal to four" )
+    * @note this (and other assertions not marked "nonFatal") are fatal. To disable, please call "Debug.fatalAssertOff_!()"
     */
   final def assert(assertion: => Boolean, message: String, maxLines: Int = Int.MaxValue): Unit = {
     if (!assertion && Debug.fatalAssertOn_?) {
@@ -170,12 +171,13 @@ object Debug {
     }
   }
 
-  /** A fatal assertion
+  /** A fatal assertion.
     * Terminates the program with exit code "7"
     *
     * @param assertion the assertion that must be true for the program to run. Can be a value or a function
     * @param message   the message to be printed to standard out on assertion failure
-    * @example Debug.assertStdOut( 1 + 2 == 4, "one plus two is not equal to four" )
+    * @example Debug.assertStdOut( 1 + 2 == 4, "Error: one plus two is not equal to four" )
+    * @note this (and other assertions not marked "nonFatal") are fatal. To disable, please call "Debug.fatalAssertOff_!()"
     */
   final def assertStdOut(assertion: => Boolean, message: String, maxLines: Int = Int.MaxValue): Unit = {
     if (!assertion && Debug.fatalAssertOn_?) {
