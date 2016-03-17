@@ -1,5 +1,6 @@
 package info.collaboration_station.debug.testing
-import info.collaboration_station.debug._
+import info.collaboration_station.debug.Implicits._
+import info.collaboration_station.debug.Debug
 /**
   * In IntelliJ Scala console, hit Ctrl+Enter instead of enter to execute
   */

@@ -1,4 +1,5 @@
 package info.collaboration_station.debug
+import info.collaboration_station.debug.Implicits.ImplicitTraceObject // used for static trace methods
 
 /**
   * Created by johnreed on 3/12/16

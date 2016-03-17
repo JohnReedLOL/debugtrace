@@ -1,9 +1,10 @@
-package info.collaboration_station
+package info.collaboration_station.debug
+// import info.collaboration_station.debug.Debug // used for enabling/disabling features
 
 /**
-  * Created by johnreed on 3/12/16.
+  * Created by johnreed on 3/17/16.
   */
-package object debug {
+object Implicits {
   import scala.language.implicitConversions // Warning: implicit conversions language feature
 
   /** Wrapper class for a value that can be traced. Uses the implicit conversion feature to append print, trace, and assert functionality onto a value
@@ -262,5 +263,4 @@ package object debug {
       toPrintOutNullable // return the original thing, even if it is null
     }
   }
-
 }
