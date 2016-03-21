@@ -3,6 +3,90 @@ Trace debugging and assertion tool for Scala.
 
 ____________________________________________________________________________________________________________________
 
+Cheat Sheet:
+
+Methods availiable through implicit conversion:
+
+```scala
+import info.collaboration_station.debug._
+
+// tracing methods:
+"foo".trace
+"foo".trace(5) // 5 lines of stack trace
+"foo".traceStdOut
+"foo".traceStdOut(5)
+
+// fatal assertions:
+"foo".assert( _ equals "foo", "Assert failed")
+"foo".assertEquals("foo", "Assert failed")
+"foo".assertStdOut( _ equals "foo", "Assert failed")
+"foo".assertEqualsStdOut("foo", "Assert failed")
+
+// non-fatal assertions:
+"foo".assertNonFatal( _ equals "foo", "Assert failed")
+"foo".assertNonFatalEquals("foo", "Assert failed")
+"foo".assertNonFatalStdOut( _ equals "foo", "Assert failed")
+"foo".assertNonFatalEqualsStdOut("foo", "Assert failed")
+
+// print methods:
+"foo".print
+"foo".println
+"foo".printStdErr
+"foo".printlnStdErr
+```
+
+Methods availiable through Debug object (may be usable in Java):
+
+```scala
+import info.collaboration_station.debug.Debug
+
+// tracing methods:
+Debug.trace("foo")
+Debug.trace("foo", 5)
+Debug.traceStack("foo") // entire stack trace
+Debug.traceStdOut("foo")
+Debug.traceStdOut("foo", 5)
+Debug.traceStackStdOut("foo")
+
+// fatal assertions:
+Debug.assert("foo" equals "foo", "Assert failed")
+Debug.assertStdOut("foo" equals "foo", "Assert failed")
+
+// non-fatal assertions:
+Debug.assertNonFatal("foo" equals "foo", "Assert failed")
+Debug.assertNonFatalStdOut("foo" equals "foo", "Assert failed")
+```
+
+Switches availiable through Debug object:
+
+```scala
+import info.collaboration_station.debug.Debug
+
+// Enable/disable tracing methods:
+Debug.traceOutOn_!
+Debug.traceOutOff_!
+Debug.traceErrOn_!
+Debug.traceErrOff_!
+
+// Enable/disable assert and assertStdOut methods:
+Debug.fatalAssertOn_!
+Debug.fatalAssertOff_!
+Debug.nonFatalAssertOn_!
+Debug.nonFatalAssertOff_!
+
+// Enable/disable everything:
+Debug.enableEverything_!
+Debug.disableEverything_!
+
+```
+
+*Note: Fatal assertions kill the application with exit code 7.* 
+*Non-fatal assertions never terminate any part of the application, not even the currently running thread.*
+*To terminate only the currectly running thread, please you an exception*
+
+____________________________________________________________________________________________________________________
+
+
 Example:
 
 ```scala
