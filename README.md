@@ -1,6 +1,8 @@
 # debugtrace
 Trace debugging and assertion tool for Scala.
 
+Note: This tool has become legacy. For Scala-11 and up, please use: https://github.com/JohnReedLOL/scala-trace-debug
+
 ____________________________________________________________________________________________________________________
 
 Cheat Sheet:
